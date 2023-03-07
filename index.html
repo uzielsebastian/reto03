@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="estilo.css">
+    <title>Document</title>
+</head>
+<body>
+    
+    <header class="arriba">   
+        <div class="padre">
+<ul> 
+    <li>
+        <img class="menu" src="660376.png" alt="">
+    </li>
+    <li>
+To do list
+    </li>
+    <li>
+        <img class="ergoproxy" src="0cbed02404018fe4e2b80b01a997f107.jpg" alt="">
+    </li>
+</ul>
+</div>
+
+    </header>
+    <section>
+        <div id="contenedor"></div>
+
+        <a href="#" id= "mostrarDiv"class="btn-flotante">agregar tarea</a>
+        <br>
+        <br>
+        <br>
+        
+    <div id="divinfo"></div>
+
+<div id="ventanita">
+    <h1>agregar tarea</h1>
+    <br>
+
+    <label for="name">Nombre de la tarea</label>
+
+        <input type="text" id="NombreTarea" name="name"     required
+        minlength="0" maxlength="25" size="25">
+
+<div>
+
+    <form>
+        <p>tipo de tarea</p>
+        <label>
+            <input type="checkbox" name="intereses[]" value="personal">
+            Personal
+        </label>
+        <br>
+        <label>
+            <input type="checkbox" name="intereses[]" value="domestica">
+            Doméstica
+        </label>
+        <br>
+        <label>
+            <input type="checkbox" name="intereses[]" value="entretenimiento">
+            Entretenimiento
+        </label>
+        <br>
+        <label>
+            <input type="checkbox" name="intereses[]" value="laboral">
+            Laboral
+        </label>
+        <br>
+        </form>
+
+</div>
+        <br>
+        <br>
+        <label for="exampleFormControlTextarea1" class="form-label">Descripción de la Tarea</label>
+
+        <input type="text" id="DescripciónTarea" name="name"     required
+        minlength="0" maxlength="100" size="43" >
+
+        <br>
+        <br>
+        <div id="prioridad">
+
+            <form>
+                <p>tipo de tarea</p>
+                <label>
+                    <input type="checkbox" name="prioridad[]" value="Baja">
+                    Baja
+                </label>
+                <br>
+                <label>
+                    <input type="checkbox" name="prioridad[]" value="Media">
+                    Media
+                </label>
+                <br>
+                <label>
+                    <input type="checkbox" name="prioridad[]" value="Alta">
+                    Alta
+                </label>
+                <br>
+                </form>
+
+            <!-- <label for="prioridad">Prioridad:</label><br>
+            <input type="checkbox" id="baja" name="prioridad" value="baja">
+            <label for="baja">Baja</label><br>
+            <input type="checkbox" id="media" name="prioridad" value="media">
+            <label for="media">Media</label><br>
+            <input type="checkbox" id="alta" name="prioridad" value="alta">
+            <label for="alta">Alta</label><br> -->
+        </div>
+
+
+    <div class="botoness">
+    <button id="cerrarDiv">Cerrar</button>
+    <button id="Agregar">agregar</button>
+    </div>
+</div>
+
+
+
+
+    </section>
+    <script>
+var botonMostrar = document.getElementById("mostrarDiv");
+var miDiv = document.getElementById("ventanita");
+
+
+miDiv.style.display = "none";   //OCULTAR DIV
+
+                                                    // CLICK EN MOSTRAR DIV
+botonMostrar.addEventListener("click", function() {
+    ventanita.style.display = "block";
+
+
+});
+
+
+
+const closeButton = document.getElementById('cerrarDiv');
+
+                                                    // CLICK
+closeButton.addEventListener('click', () => {
+                            // REFERENCIA VENTANA MODAL
+    var miDiv = document.getElementById("ventanita");
+
+
+                             // SACAR VENTANA MODAL
+    ventanita.style.display = 'none';
+});
+
+
+
+
+var Agregar = document.getElementById("Agregar");
+var contenedor = document.getElementById("contenedor");
+var numDivs = 0;
+
+
+
+
+
+
+
+Agregar.addEventListener("click", function() {
+    var titulo = document.getElementById("NombreTarea").value;
+    var descripcion = document.getElementById("DescripciónTarea").value;
+
+
+
+    const checkboxes = document.querySelectorAll('input[name="intereses[]"]:checked');
+let tipoTarea = "";
+checkboxes.forEach(function(checkbox) {
+    tipoTarea += checkbox.value + ", ";
+});
+tipoTarea = tipoTarea.slice(0, -2); 
+
+
+
+const checkboxes2 = document.querySelectorAll('input[name="prioridad[]"]:checked');
+let prioridad = "";
+checkboxes2.forEach(function(checkbox) {
+    prioridad += checkbox.value + ", ";
+});
+prioridad = prioridad.slice(0, -2); 
+
+
+
+
+
+
+
+
+
+
+
+    if (titulo !== '' && descripcion !== '') { 
+    var nuevoDiv = document.createElement("div");
+    nuevoDiv.innerHTML = "<h2>" + titulo + "</h2><p>" + descripcion + "</p><h2>" + tipoTarea +   "<h2><p>" + prioridad + "<p>" ;
+  
+    var botonBorrar = document.createElement("button");
+    botonBorrar.innerHTML = "Borrar";
+    botonBorrar.addEventListener("click", function() {
+        contenedor.removeChild(nuevoDiv);
+        numDivs--;
+
+        
+
+
+
+
+        
+    });
+
+  
+    nuevoDiv.appendChild(botonBorrar);
+
+    // BOTONES DE PRIORIDADD
+    var prioridadDiv = document.getElementById("prioridad");
+    var prioridadBotones = prioridadDiv.getElementsByTagName("button");
+
+    for (var i = 0; i < prioridadBotones.length; i++) {
+        var boton = prioridadBotones[i];
+        boton.addEventListener("click", function() {
+        nuevoDiv.innerHTML += "<p>Prioridad: " + this.innerHTML + "</p>";
+        });
+    }
+
+    contenedor.appendChild(nuevoDiv);
+    numDivs++;
+    }
+
+    
+
+    nuevoDiv.style.background = "#525259";
+    nuevoDiv.style.color = 'black';
+    nuevoDiv.style.fontFamily = 'Segoe UI, sans-serif';
+});
+
+
+var Agregar = document.getElementById("Agregar");
+var contenedor = document.getElementById("contenedor");
+var numDivs = 0;
+
+
+
+
+
+
+
+
+
+    
+
+
+
+
+
+    </script>
+
+</body>
+</html>
